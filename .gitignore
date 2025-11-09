@@ -8,4 +8,5 @@
 /history_result
 /result
 /figures
+/utils/__pycache__/
 /*.sh
