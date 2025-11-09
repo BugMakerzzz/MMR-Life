@@ -1,0 +1,11 @@
+/__pycache__
+/image
+/images
+/raw_data
+/raw_question
+/raw_result
+/test.*
+/history_result
+/result
+/figures
+/*.sh
