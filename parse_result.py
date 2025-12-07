@@ -21,6 +21,107 @@ TYPE_SPLIT_DICT = {
     'spatial': [4, 6]
 }
 
+MODEL_URL = {
+    # OpenAI (share the same OpenAI reference URLs)
+    "gpt-5": "https://openai.com/index/introducing-gpt-5/",
+    "gpt-5-mini": "https://openai.com/index/introducing-gpt-5/",
+    "gpt-4.1": "https://openai.com/index/gpt-4-1/",
+    "gpt-4.1-mini": "https://openai.com/index/gpt-4-1/",
+    "gpt-4o": "https://openai.com/index/hello-gpt-4o/",
+    "gpt-4o-mini": "https://openai.com/index/hello-gpt-4o/",
+    "o4-mini": "https://openai.com/index/o3-o4-mini-system-card/",
+
+    # Anthropic
+    "claude-sonnet-4": "https://www.anthropic.com/news/claude-4",
+    "claude-sonnet-4-thinking": "https://www.anthropic.com/news/claude-4",
+    "claude-3.7-sonnet": "https://www.anthropic.com/news/claude-3-7-sonnet",
+
+    # Google (Gemini 2.5 tech report on arXiv)
+    "gemini-2.5-flash": "https://doi.org/10.48550/arXiv.2507.06261",
+    "gemini-2.5-pro": "https://doi.org/10.48550/arXiv.2507.06261",
+
+    # ByteDance (Doubao)
+    "doubao-1.5-vision": "https://seed.bytedance.com/en/special/doubao_1_5_pro",
+
+    # Open-source models (URLs are the cited technical reports/papers)
+    "Kimi-VL-A3B": "https://arxiv.org/abs/2504.07491",
+    "Kimi-VL-A3B-Thinking-2506": "https://arxiv.org/abs/2504.07491",
+    "Keye-VL-1.5-8B": "https://arxiv.org/abs/2507.01949",
+    "MiMo-VL-7B-RL": "https://arxiv.org/abs/2506.03569",
+    "MiMo-VL-7B-SFT": "https://arxiv.org/abs/2506.03569",
+    "MM-Eureka-Qwen-7B": "https://arxiv.org/abs/2503.07365",
+    "MM-Eureka-Qwen-32B": "https://arxiv.org/abs/2503.07365",
+    "OpenVLThinker-7B-v1.2": "https://arxiv.org/abs/2503.17352",
+    "OpenVLThinker-7B-v1.2-sft": "https://arxiv.org/abs/2503.17352",
+    "Qwen2.5-VL-7B": "https://arxiv.org/abs/2502.13923",
+    "Qwen2.5-VL-32B": "https://arxiv.org/abs/2502.13923",
+    "Qwen2.5-VL-72B": "https://arxiv.org/abs/2502.13923",
+    "R1-Onevision-7B": "https://arxiv.org/abs/2503.10615",
+    "R1-Onevision-7B-RL": "https://arxiv.org/abs/2503.10615",
+    "Skywork-R1V-38B": "https://arxiv.org/abs/2504.05599",
+    "VL-Rethinker-7B": "https://arxiv.org/abs/2504.08837",
+    "VL-Rethinker-32B": "https://arxiv.org/abs/2504.08837",
+    "VL-Rethinker-72B": "https://arxiv.org/abs/2504.08837",
+    
+    "InternVL3_5-8B": "https://arxiv.org/abs/2508.18265",
+    "InternVL3_5-30B-A3B": "https://arxiv.org/abs/2508.18265",
+    "InternVL3_5-38B": "https://arxiv.org/abs/2508.18265",
+    "Gemma3-4B": "https://arxiv.org/abs/2503.19786",
+    "Gemma3-12B": "https://arxiv.org/abs/2503.19786",
+    "Gemma3-27B": "https://arxiv.org/abs/2503.19786",
+
+    # Qwen (QVQ)
+    "QVQ-72B-Preview": "https://qwenlm.github.io/blog/qvq-72b-preview/",
+}
+
+def get_leaderboard_results(results):
+    table = []
+    length = len(results['Model'])
+    for idx in range(length):
+        if not results['url'][idx]:
+            print(results['Model'][idx])
+            continue
+        out = {}
+        out['Model'] = results['Model'][idx]
+        out['Source'] = results['url'][idx]
+        out['Overall'] = results['all'][idx]
+        for type in TYPE_TASK_MAP.keys():
+            out[type.capitalize()] = results[type][idx]
+
+        table.append(out)
+
+
+    # remove the element
+    human = {'Model': 'Human',
+             'Source': '',
+             'Overall': 72.28,
+             'Abductive': 79.76,
+             'Analogical': 57.65,
+             'Causal': 75.00,
+             'Deductive': 70.59 ,
+             'Inductive': 63.41,
+             'Spatial': 79.76,
+             'Temporal': 79.76
+        }
+    human = {"-": human}
+
+    # sort the table
+    sorted_table = sorted(table, key=lambda x: x['Overall'], reverse=True)
+    sorted_table = {str(i+1): sorted_table[i] for i in range(len(sorted_table))}
+
+    # add the human performance back
+    score_table = {**human, **sorted_table}
+
+
+    # rename the top 3 models by adding 🥇, 🥈, and 🥉, respectively
+    score_table['1']['Model'] = score_table['1']['Model'] + ' 🥇'
+    score_table['2']['Model'] = score_table['2']['Model'] + ' 🥈'
+    score_table['3']['Model'] = score_table['3']['Model'] + ' 🥉'
+
+    # print to file
+    save_json_data('./leaderboard_data.js', score_table)
+
+
 def cal_image_counts(data):
     type_count_dic = defaultdict(list)
     for item in data:
@@ -171,11 +272,17 @@ def get_main_result(args):
                 continue
             str_ls = os.path.splitext(path)[0].split('_')[:-1]
             args.model = ('_').join(str_ls)
+            url = MODEL_URL[args.model] if args.model in MODEL_URL.keys() else None
             result_path = os.path.join('./result/main_exp/all/', path)
             full_result = load_json_data(result_path)
             metric = get_model_result(full_result, args)
+            all_metrics['url'] += [url]
             for k, v in metric.items():
+                if k == 'Model':
+                    v = transform_model_name(v)
                 all_metrics[k] += v
+        if args.leaderboard:
+            get_leaderboard_results(all_metrics)
         all_metrics = pd.DataFrame(all_metrics)
         all_metrics.to_csv("all_result.csv", index=False, encoding="utf-8-sig")
     else:    
@@ -187,11 +294,19 @@ def get_main_result(args):
 
 def transform_model_name(model):
     if model == 'claude-3.7-sonnet':
-        return 'Claude-3.7-sonnet'
+        return 'Claude-3.7-Sonnet'
+    elif model == 'claude-sonnet-4':
+        return 'Claude-Sonnet-4'
+    elif model == 'claude-sonnet-4-thinking':
+        return 'Claude-Sonnet-4-Thinking'
     elif model == 'gemini-2.5-pro':
-        return 'Gemini-2.5-Pro'
-    elif model == 'gemini-2.5-flash':
+        return 'Gemini-2.5-Pro',
+    elif model == 'claude-sonnet-4':
+        return 'llava-1.5-7b'
+    elif model == 'Llava-1.5-7B':
         return 'Gemini-2.5-Flash'
+    elif model == 'doubao-1.5-vision':
+        model = 'Doubao-1.5-Vision'
     elif model == 'gpt-4.1':
         return 'GPT-4.1'
     elif model == 'gpt-4o':
@@ -200,6 +315,12 @@ def transform_model_name(model):
         return 'GPT-5'
     elif model == 'gpt-5-mini':
         return 'GPT-5-mini'
+    elif model == 'InternVL3_5-8B':
+        return 'InternVL3.5-8B'
+    elif model == 'InternVL3_5-30B-A3B':
+        return 'InternVL3.5-30B-A3B'
+    elif model == 'InternVL3_5-38B':
+        return 'InternVL3.5-38B'
     else:
         return model
 
@@ -495,6 +616,7 @@ parser.add_argument('--model', type=str, default='all')
 parser.add_argument('--method', type=str, default='cot')
 parser.add_argument('--option', type=str, default='result')
 parser.add_argument('--type', type=str, default='all')
+parser.add_argument('--leaderboard', action='store_true')
 args = parser.parse_args()
 
 if __name__ == '__main__':

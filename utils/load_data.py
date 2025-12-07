@@ -152,9 +152,9 @@ def load_raw_dataset(data_path, system_prompt, n_examples=500):
 
 def load_dataset(system_prompt, n_examples=3000, shuffle=False, mini=False):
     if mini:
-        dataset = load_json_data('./MMR-mini.json')
+        dataset = load_json_data('./MMR_Life_mini.json')
     else:
-        dataset = load_json_data('./DL-MMR.json')
+        dataset = load_json_data('./MMR_Life.json')
     if shuffle:
         random.shuffle(dataset)
     dataset = dataset[:n_examples]
