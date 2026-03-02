@@ -222,8 +222,16 @@ def get_model_result(full_result, args):
     metrics = {type:{'correct':0, 'maj_correct':0, 'length':0} for type in TYPE_TASK_MAP.keys()}
     metrics['all'] = {'correct':0, 'maj_correct':0, 'length':0}
     task_results = defaultdict(list)
+    wrong_index  = [
+        "HAL_17", "ARI_68", "MCA_147", "HAL_108", "HAL_32", 
+        "MCD_71", "SFI_5", "SFI_17", "SFI_27", "SFI_39", 
+        "SFI_51", "SFI_61", "SFI_85", "SFI_105", "SFI_115", 
+        "SFI_116", "SFI_119", "SFI_125", "SFI_149", "SFI_172", 
+        "SFI_187", "PSI_20", "PSI_24", "PSI_27", "PSI_83", 
+        "PSI_84", "PSI_99", "PSI_121", "PSI_140", "PSI_161"
+    ]
     for item in full_result:
-        if 'id' not in item:
+        if 'id' not in item or item['id'] in wrong_index:
             continue
         task = item['id'].split('_')[0]
         task_results[task].append(item)
@@ -264,6 +272,7 @@ def get_model_result(full_result, args):
     
 def get_main_result(args):
     method = 'direct' if args.method == 'direct' else 'cot'
+
     if args.model == 'all':
         all_metrics = defaultdict(list)
         paths = os.listdir('./result/main_exp/all/')
@@ -275,6 +284,7 @@ def get_main_result(args):
             url = MODEL_URL[args.model] if args.model in MODEL_URL.keys() else None
             result_path = os.path.join('./result/main_exp/all/', path)
             full_result = load_json_data(result_path)
+
             metric = get_model_result(full_result, args)
             all_metrics['url'] += [url]
             for k, v in metric.items():
@@ -289,8 +299,8 @@ def get_main_result(args):
         full_result_path = f'./result/main_exp/all/{args.model}_{method}.json'
         full_result = load_json_data(full_result_path)
         metric = get_model_result(full_result, args)
-        # metric = pd.DataFrame(metric)
-        # metric.to_csv(f"{args.model}_result.csv", index=False, encoding="utf-8-sig")
+        metric = pd.DataFrame(metric)
+        metric.to_csv(f"{args.model}_result.csv", index=False, encoding="utf-8-sig")
 
 def transform_model_name(model):
     if model == 'claude-3.7-sonnet':

@@ -14,12 +14,7 @@ font_prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
 def set_iclr_style(layout=3):
-    """
-    设置 ICLR 论文绘图的统一风格
-    
-    参数:
-        layout (str): "double" | "triple" | "quad"
-    """
+
     if layout == 2:
         figsize = (7, 3.5)
         base_font = 10

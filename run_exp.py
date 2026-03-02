@@ -155,7 +155,7 @@ parser.add_argument('--max_tokens', type=int, default=5000)
 parser.add_argument('--url', type=str, default='120')
 parser.add_argument('--port', type=str, default='14396')
 parser.add_argument('--shuffle', action='store_true')
-parser.add_argument('--option', type=str, default='main_exp')
+parser.add_argument('--option', type=str, default='default')
 args = parser.parse_args()
 if __name__ == "__main__":
     main(args)

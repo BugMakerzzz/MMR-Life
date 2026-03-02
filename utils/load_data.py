@@ -177,7 +177,7 @@ def load_dataset(system_prompt, n_examples=3000, shuffle=False, mini=False):
     return data 
 
 def load_rm_dataset(n_examples=3000, shuffle=False):
-    dataset = load_json_data('./DL-MMR.json')[:n_examples]
+    dataset = load_json_data('./MMR_Life.json')[:n_examples]
     if shuffle:
         random.shuffle(dataset)
     data = []

@@ -12,11 +12,8 @@ from safetensors import safe_open
 
 
 class Reward(ABC):
-    def __init__(self, model_path: str, remote: bool):
-        if remote:
-            self.model_path = model_path.format(dir='usercache')
-        else:
-            self.model_path = model_path.format(dir='publiccache')
+    def __init__(self, model_path: str):
+        self.model_path = model_path.format(dir='usercache')
         self.model = None 
         self.tokenizer = None 
         self._initialize()
@@ -118,8 +115,8 @@ class SkyworkReward(Reward):
 
 
 # 工厂方法，根据name动态返回具体子类的实例
-def reward_factory(name: str, remote: bool) -> Reward:
+def reward_factory(name: str) -> Reward:
     if name.startswith('Skywork'):
-        return SkyworkReward(skywork_rm_path, remote)
+        return SkyworkReward(skywork_rm_path)
     else:
         return None 
