@@ -51,9 +51,9 @@ In this phase, the model generates multiple reasoning paths based on the configu
 
 - **Inference Options** (controlled by `--option`):
 
-  - **Base Inference (`default`):** Uses direct answer or CoT prompting to inference the questions.
-  - **Reward Modeling (`rm`):** Uses the **Skywork Reward Model** to score multiple candidates and select the optimal response based on reward scores.
-  - **Usage Profiling (`usage`):** Specifically tracks `prompt_tokens` and `completion_tokens` to calculate computational cost.
+  - **Base Inference** (`default`): Uses direct answer or CoT prompting to inference the questions.
+  - **Reward Modeling** (`rm`): Uses reward models to score multiple candidates and select the optimal response based on reward scores.
+  - **Usage Profiling** (`usage`): Specifically tracks `prompt_tokens` and `completion_tokens` to calculate computational cost.
 
 - **Extraction**: The `extract_answer` function parses the raw model output to isolate the final prediction.
 
