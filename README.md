@@ -1,8 +1,8 @@
 # MMR-Life Benchmark
 
-[**🌐 Homepage**](https://mmr-life-bench.github.io/) | [**🤗 Dataset**](https://huggingface.co/datasets/Septzzz/MMR-Life) |  [**📖 Paper**](https://openreview.net/pdf?id=ds8bBklDV5) 
+[**🌐 Homepage**](https://mmr-life-bench.github.io/) | [**🤗 Dataset**](https://huggingface.co/datasets/Septzzz/MMR-Life) |  [**📖 Paper**](https://arxiv.org/abs/2603.02024) 
 
-This repo contains the evaluation code for the paper "[MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning](https://openreview.net/pdf?id=ds8bBklDV5)"
+This repo contains the evaluation code for the paper "[MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning](https://arxiv.org/abs/2603.02024)"
 
 
 
@@ -91,7 +91,14 @@ Jiachun Li: 1641412838@qq.com
 ## Citation
 
 **BibTeX:**
-
 ```bibtex
-
+@misc{li2026mmrlifepiecingreallifescenes,
+      title={MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning}, 
+      author={Jiachun Li and Shaoping Huang and Zhuoran Jin and Chenlong Zhang and Pengfei Cao and Yubo Chen and Kang Liu and Jun Zhao},
+      year={2026},
+      eprint={2603.02024},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2603.02024}, 
+}
 ```
