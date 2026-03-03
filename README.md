@@ -2,7 +2,7 @@
 
 [**🌐 Homepage**](https://mmr-life-bench.github.io/) | [**🤗 Dataset**](https://huggingface.co/datasets/Septzzz/MMR-Life) |  [**📖 Paper**](https://arxiv.org/abs/2603.02024) 
 
-This repo contains the evaluation code for the paper "[MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning](https://arxiv.org/abs/2603.02024)"
+This repo contains the evaluation code for the **ICLR 2026** paper "[MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning](https://arxiv.org/abs/2603.02024)"
 
 
 
