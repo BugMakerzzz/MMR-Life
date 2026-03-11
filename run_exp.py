@@ -92,21 +92,22 @@ def main_exp(args):
         'seed':17
     }
     
-    if args.option == 'main_exp':
-        output_dir = f'./result/main_exp/all/'
-    elif args.option == 'budget':
+    if args.option == 'budget':
         output_dir = f'./result/budget/'
     elif args.option == 'n_scale':
         output_dir = f'./result/n_scale/' 
+    else:
+        output_dir = f'./result/main_exp/all/'
         
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    if args.option == 'main_exp':
-        output_path = os.path.join(output_dir, f"{args.model}_{args.method}.json")
-    elif args.option == 'budget':
+        
+    if args.option == 'budget':
         output_path = os.path.join(output_dir, f"{args.model}.json")
     elif args.option == 'n_scale':
         output_path = os.path.join(output_dir, f"{args.model}_{args.n_sample}.json")
+    else:
+        output_path = os.path.join(output_dir, f"{args.model}_{args.method}.json")
     
     # results, start_idx = load_last_index(output_path)
     results, dataset = load_remain_data(output_path, dataset)
@@ -155,7 +156,7 @@ parser.add_argument('--max_tokens', type=int, default=5000)
 parser.add_argument('--url', type=str, default='120')
 parser.add_argument('--port', type=str, default='14396')
 parser.add_argument('--shuffle', action='store_true')
-parser.add_argument('--option', type=str, default='default')
+parser.add_argument('--option', type=str, default='main_exp')
 args = parser.parse_args()
 if __name__ == "__main__":
     main(args)

@@ -21,6 +21,18 @@ This repository contains the evaluation suite for testing Multimodal Large Langu
 
 Before running the evaluation, ensure the environment and the model server are properly initialized.
 
++ **Environment Installation**
+
+  We use Python 3.10.0 and CUDA 12.8.
+
+  ```
+  git clone https://github.com/BugMakerzzz/MMR-Life.git
+  conda create -n mmr_life python=3.10
+  conda activate mirage
+  cd MMR-Life
+  pip install -r requirements.txt
+  ```
+
 + **Data Loading**
 
   The evaluation script loads images and JSON metadata from the specified paths. Please ensure your data is prepared by downloading it from the official repository:  [**🤗 MMR-Life**](https://huggingface.co/datasets/Septzzz/MMR-Life). Ensure your local data directory is structured as follows:
@@ -29,12 +41,12 @@ Before running the evaluation, ensure the environment and the model server are p
   + JSON Data: MMR_Life.json or MMR_Life_mini.json.
 
 + **Model Deployment**
-  We recommend using [**vLLM**](https://github.com/vllm-project/vllm) to deploy open-source models as an OpenAI-compatible API server for optimal performance.
+  We recommend using [**vLLM**](https://github.com/vllm-project/vllm) to deploy open-source models as an OpenAI-compatible API server for optimal performance. Please fill in the vllm API Key (if available) and the corresponding URL information into `utils/config.py`.
 
   + Example: Deploying Qwen2.5-VL-7B
 
     ```
-    vllm serve huggingface/Qwen2.5-VL-7B-Instruct --task generate --trust-remote-code --port YOUR_PORT --api-key YOUR_KEY --served-model-name Qwen2.5-VL-7B --limit-mm-per-prompt.image 32 
+    vllm serve huggingface/Qwen2.5-VL-7B-Instruct --task generate --trust-remote-code --url YOUR_URL --port YOUR_PORT --api-key YOUR_KEY --served-model-name Qwen2.5-VL-7B --limit-mm-per-prompt.image 32 
     ```
 
     **Note:** Ensure that the --port and --url in your `run_exp.py` execution command match this deployment.
@@ -51,7 +63,7 @@ In this phase, the model generates multiple reasoning paths based on the configu
 
 - **Inference Options** (controlled by `--option`):
 
-  - **Base Inference** (`default`): Uses direct answer or CoT prompting to inference the questions.
+  - **Base Inference** (`main_exp`): Uses direct answer or CoT prompting to inference the questions.
   - **Reward Modeling** (`rm`): Uses reward models to score multiple candidates and select the optimal response based on reward scores.
   - **Usage Profiling** (`usage`): Specifically tracks `prompt_tokens` and `completion_tokens` to calculate computational cost.
 
@@ -62,7 +74,7 @@ In this phase, the model generates multiple reasoning paths based on the configu
 Example:
 
 ```
-python run_exp.py --model Qwen2.5-VL-7B --method cot --option default
+python run_exp.py --model Qwen2.5-VL-7B --method cot --option main_exp
 ```
 
 
@@ -91,6 +103,7 @@ Jiachun Li: 1641412838@qq.com
 ## Citation
 
 **BibTeX:**
+
 ```bibtex
 @misc{li2026mmrlifepiecingreallifescenes,
       title={MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning}, 

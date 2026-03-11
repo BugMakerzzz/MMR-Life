@@ -1,6 +1,5 @@
 from .config import *
 from openai import OpenAI
-import anthropic
 
 class Model():
 

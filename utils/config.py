@@ -2,7 +2,7 @@
 OPENAI_BASE_URL = ''
 OPENAI_API_KEY = ''
 
-VLLM_API_KEY = ''
+VLLM_API_KEY = 'ljc'
 
 
 API_MODEL_MAP_DICT = {
@@ -33,7 +33,7 @@ API_MODEL_MAP_DICT = {
 }
 
 VLLM_URL_DICT = {
-    '120': 'http://175.102.130.120:{port}/v1',
+    '120': 'http://ENTER_YOUR_URL:{port}/v1',
     '139': 'http://210.75.240.139:{port}/v1',
     '153': 'http://210.75.240.153:{port}/v1',
     '154': 'http://210.75.240.154:{port}/v1',
