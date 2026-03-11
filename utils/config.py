@@ -70,8 +70,8 @@ TASK_PATH_MAP = {
     'HAL': 'temporal/Human Activity Localization/'
 }
 
-intern_rm_path = '/mnt/{dir}/zhaosuifeng/model/internlm-xcomposer2d5-7b-reward'
-r1_rm_path = '/mnt/{dir}/zhaosuifeng/model/R1-Reward'
-skywork_rm_path = '/mnt/{dir}/zhaosuifeng/model/Skywork-VL-Reward-7B'
-unified_rm_path = '/mnt/{dir}/zhaosuifeng/model/UnifiedReward-7b-v1.5'
-visual_rm_path = '/mnt/{dir}/zhaosuifeng/model/VisualPRM-8B-v1.1'
+intern_rm_path = '/mnt/{dir}/model/internlm-xcomposer2d5-7b-reward'
+r1_rm_path = '/mnt/{dir}/model/R1-Reward'
+skywork_rm_path = '/mnt/{dir}/model/Skywork-VL-Reward-7B'
+unified_rm_path = '/mnt/{dir}/model/UnifiedReward-7b-v1.5'
+visual_rm_path = '/mnt/{dir}/model/VisualPRM-8B-v1.1'
